@@ -28,9 +28,9 @@ class Client:
 		self.channel_port = port
 
 		Thread(name="Client Listening Thread", 
-			target=self._process_messages, daemon=True).start()
+			target=self.__process_messages, daemon=True).start()
 
-	def _process_messages(self):
+	def __process_messages(self):
 		"""
 		Retrieves messages from a MessageReceiver object and passes it to the
 		process function. Should be used in a daemon thread as it loops 
@@ -42,7 +42,7 @@ class Client:
 
 	def connect(self, username):
 		"""
-		Connects the client to a server.
+		Registers the client to the server. 
 
 		username - this client's username
 		"""
