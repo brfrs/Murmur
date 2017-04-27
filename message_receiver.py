@@ -67,8 +67,7 @@ class MessageReceiver:
 				client_sock, client_addr = listening_sock.accept()
 				body = client_sock.recv(MAX_BUFFER_SIZE).decode()
 				
-				if len(body) > 0:
-					self.receive(Message(body, client_addr[0]))
+				self.receive(Message(body, client_addr[0]))
 
 			except socket.timeout:
 				pass
