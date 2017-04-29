@@ -65,7 +65,11 @@ class MessageReceiver:
 		listening_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		socket.setdefaulttimeout(SHORT_TIME_OUT)
 
+<<<<<<< HEAD
 		listening_sock.bind((self.ip, self.channel_port)) # TODO FIX THIS
+=======
+		listening_sock.bind(('127.0.0.1', self.channel_port)) # TODO FIX THIS
+>>>>>>> dc8783c5b3f59dc94e3de1d7e658733bfb59cdf6
 		listening_sock.listen(5)
 
 		while True:
