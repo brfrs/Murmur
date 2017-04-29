@@ -14,7 +14,7 @@ class Client:
 	"""
 	Processes received messages from a server and sends messages to the server.
 	"""
-	def __init__(self, server_ip, process=print, port=None):
+	def __init__(self, client_ip, server_ip, process, port=None):
 		"""
 		Initializes the client.
 
@@ -23,10 +23,10 @@ class Client:
 		process - properly received messages are passed to this function.
 		"""
 		self.process = process
-		self.receiver = MessageReceiver(port)
+		self.receiver = MessageReceiver(client_ip, port)
+
 		self.server_ip = server_ip
 		self.channel_port = port
-
 		Thread(name="Client Listening Thread", 
 			target=self.__process_messages, daemon=True).start()
 
