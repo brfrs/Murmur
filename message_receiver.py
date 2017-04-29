@@ -44,7 +44,8 @@ class MessageReceiver:
 
 		returns a Message tuple
 		"""
-		yield self.message_queue.get()
+		while True:
+			yield self.message_queue.get()
 
 	def receive(self, new_message):
 		"""
