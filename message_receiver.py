@@ -33,7 +33,7 @@ class MessageReceiver:
 		if port is not None:
 			self.channel_port = port
 
-			Thread(name="Listening Thread", target=self._receive_messages, 
+			Thread(name="Listening Thread", target=self.__receive_messages, 
 				daemon=True).start()
 
 	def __iter__(self):
@@ -55,11 +55,15 @@ class MessageReceiver:
 		
 		self.message_queue.put(new_message)
 
-	def _receive_messages(self):
+	def __receive_messages(self):
+		"""
+		Take a message from a network connection and put it on the message
+		queue.
+		"""
 		listening_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		socket.setdefaulttimeout(SHORT_TIME_OUT)
 
-		listening_sock.bind(('0.0.0.0', self.channel_port)) #TODO FIX THIS
+		listening_sock.bind(('127.0.0.1', self.channel_port)) # TODO FIX THIS
 		listening_sock.listen(5)
 
 		while True:
