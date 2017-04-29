@@ -23,17 +23,19 @@ class MessageReceiver:
 	"""
 	message_queue = Queue()
 
-	def __init__(self, port=None):
+	def __init__(self, ip, port=None):
 		"""
 		Sets up and starts the receiver for listening. Takes the port as
 		a parameter. The port should be the same for all clients and servers.
 
 		port - the receiving port for the listening socket.
 		"""
+		self.ip = ip
+		
 		if port is not None:
 			self.channel_port = port
 
-			Thread(name="Listening Thread", target=self._receive_messages, 
+			Thread(name="Listening Thread", target=self.__receive_messages, 
 				daemon=True).start()
 
 	def __iter__(self):
@@ -55,11 +57,15 @@ class MessageReceiver:
 		
 		self.message_queue.put(new_message)
 
-	def _receive_messages(self):
+	def __receive_messages(self):
+		"""
+		Take a message from a network connection and put it on the message
+		queue.
+		"""
 		listening_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		socket.setdefaulttimeout(SHORT_TIME_OUT)
 
-		listening_sock.bind(('0.0.0.0', self.channel_port)) #TODO FIX THIS
+		listening_sock.bind((self.ip, self.channel_port)) # TODO FIX THIS
 		listening_sock.listen(5)
 
 		while True:
