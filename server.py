@@ -27,7 +27,12 @@ class Server:
 
 		self.client_process = client_process
 		self.receiver = MessageReceiver(self.ip, self.channel_port)
-		
+	
+
+	def start_processing(self):
+		"""
+		Starts the server for actual processing.
+		"""
 		Thread(name='Server Processing Thread', target=self.__process_requests,
 			daemon=True).start()
 
