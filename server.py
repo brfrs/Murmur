@@ -6,6 +6,7 @@
 """
 import socket
 import re
+import logging
 
 from queue import Queue
 from threading import Thread
@@ -14,6 +15,8 @@ from user_registry import UserRegistry
 from message_receiver import MessageReceiver, Message
 
 COMMAND_FLAG_CHAR = '/'
+
+logger = logging.getLogger(__name__)
 
 class Server:
 	"""
@@ -27,12 +30,13 @@ class Server:
 
 		self.client_process = client_process
 		self.receiver = MessageReceiver(self.ip, self.channel_port)
-	
+		logger.info("Server initialized.")
 
 	def start_processing(self):
 		"""
 		Starts the server for actual processing.
 		"""
+		logger.info("Server processing started.")
 		Thread(name='Server Processing Thread', target=self.__process_requests,
 			daemon=True).start()
 
@@ -45,12 +49,25 @@ class Server:
 		"""
 		for received_message in self.receiver:
 			if received_message.sender in self.registry.ip:
+				logger.info("Message received from registered client.")
 				if received_message.body.startswith(COMMAND_FLAG_CHAR):
+					logger.debug("Message was a command.")
 					self.parse(received_message.body)
 				else:
+					logger.debug("Message was generic.")
 					self.send_to_all(received_message)
 			else:
+				logger.info("Message received from an unregistered client.")
 				self.attempt_to_register(received_message)
+
+	def parse(self, message):
+		"""
+		Try to make sense out of a command sent to the server from a registered
+		client.
+
+		message - a message object
+		"""
+		pass
 
 	def register_hosting_client(self, username):
 		"""
@@ -68,12 +85,15 @@ class Server:
 
 		message - a Message object to parse.
 		"""
+		logger.info("Attempting to register client.")
+
 		successful_parse = re.match(r'\/regi (.{1,30})', message.body)
 
 		if successful_parse and self.validate_name(successful_parse.group(1)):
+			logger.info("Client successfully registered.")
 			self.registry.register(successful_parse.group(1), message.sender)
 		else:
-			pass # Ignore the message
+			logger.info("Client not registered") # Ignore the message
 
 	def validate_name(self, username):
 		"""

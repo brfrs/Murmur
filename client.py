@@ -5,10 +5,13 @@
 	Client
 """
 import socket
+import logging
 
 from threading import Thread
 
 from message_receiver import MessageReceiver, Message
+
+logger = logging.getLogger(__name__)
 
 class Client:
 	"""
@@ -22,6 +25,7 @@ class Client:
 		port - the reception port of the server and the clients on the channel.
 		process - properly received messages are passed to this function.
 		"""
+		logger.info("Client initialized.")
 		self.process = process
 		self.receiver = MessageReceiver(client_ip, port)
 
@@ -36,7 +40,10 @@ class Client:
 		process function. Should be used in a daemon thread as it loops 
 		forever.
 		"""
+		logger.info("Starting to process messages.")
 		for received_message in self.receiver:
+			logger.info("Message received.")
+			
 			if received_message.sender == self.server_ip or received_message.sender == 'local':
 				self.process(received_message.body)
 
@@ -46,6 +53,7 @@ class Client:
 
 		username - this client's username
 		"""
+		logger.info("Trying to connect to the server.")
 		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 			sock.connect((self.server_ip, self.channel_port))
 			sock.send("/regi {}".format(username).encode())
@@ -56,7 +64,10 @@ class Client:
 
 		message - some string to send to the server.
 		"""
+		logger.info("Sending a message.")
+		logger.debug("Message: " + message)
 		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 			sock.connect((self.server_ip, self.channel_port))
 
 			sock.send(message.encode())
+			logger.debug("Message successfully sent.")
