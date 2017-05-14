@@ -4,8 +4,6 @@
 	Main Application
 """
 
-from tkinter import *
-
 from interface import *
 
 from server import Server
