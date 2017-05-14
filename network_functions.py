@@ -17,7 +17,7 @@ THREAD_POOL_SIZE = 100
 ENDPOINT_ADDR = ("8.8.8.8", 80)
 IP_PATTERN = r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})"
 
-def get_public_ip():
+def get_public_ip() -> str:
 	"""
 	Figures out the public ip by connecting to a socket on the internet.
 	Requires an internet connection.
@@ -27,7 +27,7 @@ def get_public_ip():
 		
 		return sock.getsockname()[0]
 
-def get_net_from_ipconfig():
+def get_net_from_ipconfig() -> (str, str):
 	"""
 	Gets the ip from the ifconfig commandline program. For Windows only.
 	"""
@@ -45,7 +45,7 @@ def get_net_from_ipconfig():
 	
 	return ip, subnet
 
-def get_set_bits(subnet: str):
+def get_set_bits(subnet: str) -> int:
 	"""
 	Returns the number of host bits set from the subnet mask.
 	"""
@@ -67,7 +67,7 @@ def get_set_bits(subnet: str):
 	return set_bits
 
 
-def get_network_ip_address(client_ip: str, netmask:str):
+def get_network_ip_address(client_ip: str, netmask:str) -> str:
 	"""
 	Calculates the network ip with a client ip and a subnet mask. Appends the
 	CIDR notation as well.

@@ -60,7 +60,7 @@ class Server:
 				logger.info("Message received from an unregistered client.")
 				self.attempt_to_register(received_message)
 
-	def parse(self, message):
+	def parse(self, message: Message):
 		"""
 		Try to make sense out of a command sent to the server from a registered
 		client.
@@ -69,7 +69,7 @@ class Server:
 		"""
 		pass
 
-	def register_hosting_client(self, username):
+	def register_hosting_client(self, username: str):
 		"""
 		Registers the hosting client's username with the registry.
 
@@ -78,7 +78,7 @@ class Server:
 		if self.validate_name(username):
 			self.registry.register(username, 'local')
 
-	def attempt_to_register(self, message):
+	def attempt_to_register(self, message: Message):
 		"""
 		Called when a message is received from an unregistered client. Tries to
 		match the sent message with the proper registration format.
@@ -95,7 +95,7 @@ class Server:
 		else:
 			logger.info("Client not registered") # Ignore the message
 
-	def validate_name(self, username):
+	def validate_name(self, username: str) -> bool:
 		"""
 		Checks to see if the username is valid.
 
@@ -103,7 +103,7 @@ class Server:
 		"""
 		return True
 
-	def send(self, message_body, target):
+	def send(self, message_body: str, target: str):
 		"""
 		Sends a message to a client. If the message fails to send, the target
 		is removed from the registry and presumed to be disconnected.
@@ -122,7 +122,7 @@ class Server:
 				except socket.timeout:
 					self.registry.delete_ip(target)
 
-	def send_to_all(self, message):
+	def send_to_all(self, message: Message):
 		"""
 		Sends a message to all ips in the registry. Appends the username before
 		sending the message.
@@ -134,7 +134,7 @@ class Server:
 		for ip in self.registry.ip:
 			self.send(to_send, ip)
 
-	def send_as_hosting_user(self, message_body):
+	def send_as_hosting_user(self, message_body: str):
 		"""
 		Sends a message under the server's registered user name.
 

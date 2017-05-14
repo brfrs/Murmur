@@ -14,7 +14,7 @@ class MainMenu(Frame):
 	Spawns the main menu of the application. Should turn itself into a client
 	view depending on the user's choice.
 	"""
-	def __init__(self, master, join_function, create_function):
+	def __init__(self, master: Frame, join_function, create_function):
 		super().__init__(master)
 
 		self.serving_port = StringVar(self)

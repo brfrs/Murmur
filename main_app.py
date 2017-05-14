@@ -1,5 +1,6 @@
 """
 	Murmur
+	~~~~~~
 
 	Main Application
 """
@@ -15,7 +16,7 @@ class App:
 	"""
 	The main gui and logic of the program.
 	"""
-	def __init__(self, root=None):
+	def __init__(self, root: Tk):
 		self.root = root
 		self.root.resizable(False, False)
 		self.root.configure(padx=10, pady=10, bg=DARK_BLUE)
@@ -38,7 +39,7 @@ class App:
 		"""
 		self.replace_current_frame(CreateClientMenu(self.root, self.spawn_client))
 
-	def spawn_client(self, ip, port, username):
+	def spawn_client(self, ip: str, port: int, username: str):
 		"""
 		Spawns a client with the given parameters. Will draw the client
 		interface onto the screen as well.
@@ -49,7 +50,7 @@ class App:
 		self.client_instance.process = self.current_frame.write_to_screen
 		self.client_instance.connect(username)
 
-	def spawn_server(self, port, username):
+	def spawn_server(self, port: int, username: str):
 		"""
 		Spawns a server with the given parameters and replaces the current frame
 		with a client view frame.
@@ -62,7 +63,7 @@ class App:
 
 		self.server_instance.register_hosting_client(username)
 
-	def replace_current_frame(self, new_frame):
+	def replace_current_frame(self, new_frame: Frame):
 		"""
 		Clears the frame held in current_frame and replaces it with the
 		frame in the argument.

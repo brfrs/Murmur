@@ -12,7 +12,7 @@ class UserRegistry:
 	user = {} # user -> ip
 	ip = {}   # ip -> user
 
-	def register(self, new_user, new_ip):
+	def register(self, new_user: str, new_ip: str):
 		"""
 		Add a new user to the registry.
 
@@ -22,7 +22,7 @@ class UserRegistry:
 		self.user[new_user] = new_ip
 		self.ip[new_ip] = new_user
 
-	def delete_user(self, key):
+	def delete_user(self, key: str):
 		"""
 		Delete an element in the registry based on the key in user dict.
 
@@ -32,7 +32,7 @@ class UserRegistry:
 		del self.user[key]
 		del self.ip[ip_to_del]
 
-	def delete_ip(self, key):
+	def delete_ip(self, key: str):
 		"""
 		Delete an element in the registry based on the key in ip dict.
 
@@ -42,7 +42,7 @@ class UserRegistry:
 		del self.ip[key]
 		del self.user[user_to_del]
 
-	def rename_user(self, ip_addr, new_user):
+	def rename_user(self, ip_addr: str, new_user: str):
 		"""
 		Renames a user already in the registry.
 

@@ -26,7 +26,7 @@ class MessageReceiver:
 	"""
 	message_queue = Queue()
 
-	def __init__(self, ip, port=None):
+	def __init__(self, ip: str, port=None):
 		"""
 		Sets up and starts the receiver for listening. Takes the port as
 		a parameter. The port should be the same for all clients and servers.
@@ -44,7 +44,7 @@ class MessageReceiver:
 			Thread(name="Listening Thread", target=self.__receive_messages, 
 				daemon=True).start()
 
-	def __iter__(self):
+	def __iter__(self) -> Message:
 		"""
 		Generator that produces messages from the message queue.
 
@@ -53,7 +53,7 @@ class MessageReceiver:
 		while True:
 			yield self.message_queue.get()
 
-	def receive(self, new_message):
+	def receive(self, new_message: Message):
 		"""
 		Puts a message on the message queue.
 

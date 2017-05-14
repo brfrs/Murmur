@@ -43,7 +43,7 @@ class ClientView(Frame):
 		self.message_entry.grid(row=1, column=0, sticky=N+S+E+W, padx=5, pady=(0,5))
 		self.send_button.grid(row=1, column=1, sticky=N+S+E+W, padx=5, pady=(0,5))
 
-	def send_message(self, event):
+	def send_message(self, event: object):
 		"""
 		Sends the message in the message entry and then erases what was in it.
 		"""
@@ -53,7 +53,7 @@ class ClientView(Frame):
 			self.message_entry.delete('1.0', 'end')
 			self.send_function(to_send.strip())
 
-	def write_to_screen(self, text):
+	def write_to_screen(self, text: str):
 		"""
 		Writes some string to the screen of the ClientView. Adds a new line
 		character to the text.

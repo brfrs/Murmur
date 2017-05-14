@@ -17,7 +17,7 @@ class Client:
 	"""
 	Processes received messages from a server and sends messages to the server.
 	"""
-	def __init__(self, client_ip, server_ip, process, port=None):
+	def __init__(self, client_ip: str, server_ip: str, process, port=None):
 		"""
 		Initializes the client.
 
@@ -47,7 +47,7 @@ class Client:
 			if received_message.sender == self.server_ip or received_message.sender == 'local':
 				self.process(received_message.body)
 
-	def connect(self, username):
+	def connect(self, username: str):
 		"""
 		Registers the client to the server. 
 
@@ -58,7 +58,7 @@ class Client:
 			sock.connect((self.server_ip, self.channel_port))
 			sock.send("/regi {}".format(username).encode())
 
-	def send(self, message):
+	def send(self, message: str):
 		"""
 		Sends a message to the server.
 
