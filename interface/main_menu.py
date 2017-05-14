@@ -16,8 +16,6 @@ class MainMenu(Frame):
 	"""
 	def __init__(self, master, join_function, create_function):
 		super().__init__(master)
-		
-		self['bg'] = DARK_BLUE
 
 		self.serving_port = StringVar(self)
 		self.username = StringVar(self)
@@ -35,6 +33,8 @@ class MainMenu(Frame):
 		self.join_server_button.configure(highlightbackground=DARK_BLUE)
 		self.start_server_button.configure(highlightbackground=DARK_BLUE)
 
+		self.configure(bg=DARK_BLUE)
+
 	def grid(self, *args, **kwargs):
 		super().grid(*args, **kwargs)
 
@@ -43,3 +43,4 @@ class MainMenu(Frame):
 		self.join_server_button.grid(row=1, column=0, columnspan=2, sticky=N+S+E+W)
 
 		self.start_server_button.grid(row=2, column=0, columnspan=2, sticky=N+S+E+W)
+	
