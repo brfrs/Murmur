@@ -49,7 +49,7 @@ class Server:
 		to register them. 
 		"""
 		for received_message in self.receiver:
-			if received_message.sender in self.registry.ip:
+			if self.registry.ip_known(received_message.sender):
 				logger.info("Message received from registered client.")
 				if received_message.body.startswith(COMMAND_FLAG_CHAR):
 					logger.debug("Message was a command.")
@@ -132,9 +132,9 @@ class Server:
 
 		message - a message object
 		"""
-		to_send = self.registry.ip[message.sender] + ": " + message.body
+		to_send = self.registry.get_user(message.sender) + ": " + message.body
 
-		for ip in self.registry.ip:
+		for ip in self.registry.ip():
 			self.send(to_send, ip)
 
 	def send_as_hosting_user(self, message_body: str):
