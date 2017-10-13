@@ -22,11 +22,12 @@ class Server:
 	"""
 	Murmur server.
 	"""
-	registry = UserRegistry()
 
 	def __init__(self, port, ip, client_process):
 		self.channel_port = port
 		self.ip = ip
+
+		self.registry = UserRegistry()
 
 		self.client_process = client_process
 		self.receiver = MessageReceiver(self.ip, self.channel_port)
@@ -81,7 +82,8 @@ class Server:
 	def attempt_to_register(self, message: Message):
 		"""
 		Called when a message is received from an unregistered client. Tries to
-		match the sent message with the proper registration format.
+		match the sent message with the proper registration format. If it can't
+		register the client, the client is ignored.
 
 		message - a Message object to parse.
 		"""
@@ -101,7 +103,8 @@ class Server:
 
 		username - a string for the registering client's username
 		"""
-		return True
+		return not self.registry.name_taken(username)
+
 
 	def send(self, message_body: str, target: str):
 		"""

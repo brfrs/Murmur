@@ -54,3 +54,6 @@ class UserRegistry:
 
 		del self.user[old_user]
 		self.user[new_user] = ip_addr
+
+	def name_taken(self, username: str):
+		return username in self.user
