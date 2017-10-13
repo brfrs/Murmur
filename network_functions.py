@@ -17,16 +17,6 @@ THREAD_POOL_SIZE = 100
 ENDPOINT_ADDR = ("8.8.8.8", 80)
 IP_PATTERN = r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})"
 
-def get_public_ip() -> str:
-	"""
-	Figures out the public ip by connecting to a socket on the internet.
-	Requires an internet connection.
-	"""
-	with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-		sock.connect(ENDPOINT_ADDR)
-		
-		return sock.getsockname()[0]
-
 def get_net_from_ipconfig() -> (str, str):
 	"""
 	Gets the ip from the ifconfig commandline program. For Windows only.

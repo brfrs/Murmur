@@ -10,8 +10,6 @@ from interface import *
 from server import Server
 from client import Client
 
-from network_functions import get_public_ip
-
 class App:
 	"""
 	The main gui and logic of the program.
@@ -44,7 +42,7 @@ class App:
 		Spawns a client with the given parameters. Will draw the client
 		interface onto the screen as well.
 		"""
-		self.client_instance = Client(get_public_ip(), ip, print, port)
+		self.client_instance = Client("0.0.0.0", ip, print, port)
 		self.replace_current_frame(ClientView(self.root, self.client_instance.send))
 		
 		self.client_instance.process = self.current_frame.write_to_screen
@@ -55,7 +53,7 @@ class App:
 		Spawns a server with the given parameters and replaces the current frame
 		with a client view frame.
 		"""
-		self.server_instance = Server(port, get_public_ip(), print)
+		self.server_instance = Server(port, "0.0.0.0", print)
 		
 		self.replace_current_frame(ClientView(self.root, self.server_instance.send_as_hosting_user))
 		self.server_instance.client_process = self.current_frame.write_to_screen
