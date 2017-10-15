@@ -52,6 +52,8 @@ class ClientView(Frame):
 		if len(to_send.strip()) > 0:
 			self.message_entry.delete('1.0', 'end')
 			self.send_function(to_send.strip())
+		
+		return 'break' # Disables newline entry 
 
 	def write_to_screen(self, text: str):
 		"""
