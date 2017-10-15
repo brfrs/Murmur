@@ -23,19 +23,42 @@ class UserRegistry:
 		self.__user[new_user] = new_ip
 		self.__ip[new_ip] = new_user
 
-	def name_taken(self, username: str):
+	def name_taken(self, username: str) -> bool:
+		"""
+		Checks if a username is taken.
+
+		username - a name to be tested
+		"""
 		return username in self.__user
 
-	def ip_known(self, ip:str):
+	def ip_known(self, ip: str) -> bool:
+		"""
+		Checks if the ip is in the registry.abs
+
+		ip - an ip to be checked
+		"""
 		return ip in self.__ip
 
-	def get_user(self, ip:str):
+	def get_user(self, ip: str) -> str:
+		"""
+		Returns the username that an ip address is registered to.
+
+		ip - a registered ip
+		"""
 		return self.__ip[ip]
 
-	def get_ip(self, user:str):
+	def get_ip(self, user: str) -> str:
+		"""
+		Returns the ip that a username is registered to.
+
+		user - a registered username
+		"""
 		return self.__user[user]
 
 	def ip(self):
+		"""
+		A generator expression that yields the ips in the registery.
+		"""
 		for ip in self.__ip.keys():
 			yield ip
 
@@ -66,8 +89,9 @@ class UserRegistry:
 		ip_addr - ip of the user
 		new_user - the user's new name
 		"""
-		old_user = self.__ip[ip_addr]
-		self.__ip[ip_addr] = new_user
+		if not self.name_taken(new_user):
+			old_user = self.__ip[ip_addr]
+			self.__ip[ip_addr] = new_user
 
-		del self.__user[old_user]
-		self.__user[new_user] = ip_addr
+			del self.__user[old_user]
+			self.__user[new_user] = ip_addr
